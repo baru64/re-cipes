@@ -36,5 +36,5 @@ export interface Recipe {
 export enum UNITS {
     G = 'g',
     ML = 'ml',
-    PIECE = 'piece(s)',
+    PIECE = 'pieces',
 }
