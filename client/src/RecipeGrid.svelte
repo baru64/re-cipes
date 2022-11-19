@@ -59,8 +59,8 @@
                                class="card-media-16x9"
                                aspectRatio="16x9">
                             <div style="place-items: center start">
-                                <div style="background: white; height: 3rem; text-align: center">
-                                    <h2 class="mdc-typography--headline6" style="margin: 0;">
+                                <div style="height: 3rem ;background: floralwhite;opacity: 0.8;">
+                                    <h2 style="top:100%">
                                         {recipe.name}
                                     </h2>
                                 </div>

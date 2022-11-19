@@ -16,12 +16,11 @@
 
 <div class="solo-demo-container solo-container">
     <Paper class="solo-paper" elevation={6}>
-
-        <Input style="height:200rem"
-               bind:value
-               on:keydown={handleKeyDown}
-               placeholder="Search recipe"
-               class="solo-input"
+        <Input
+                bind:value
+                on:keydown={handleKeyDown}
+                placeholder="Search recipe"
+                class="solo-input"
         >
         </Input>
         <Icon
@@ -39,7 +38,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 5rem;
+        margin-bottom: 3rem;
     }
 
     * :global(.solo-paper) {
