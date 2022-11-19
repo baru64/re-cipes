@@ -47,12 +47,12 @@ def get_db():
 
 # recipes
 
-@app.get("/recipes/", response_model=List[schemas.Recipe], tags=["recipes"])
+@app.get("/recipes/", response_model=List[schemas.RecipeResponse], tags=["recipes"])
 def read_recipes(db: Session = Depends(get_db)):
     return crud.get_recipes(db)
 
 
-@app.get("/recipes/{recipe_id}", response_model=schemas.Recipe, tags=["recipes"])
+@app.get("/recipes/{recipe_id}", response_model=schemas.RecipeResponse, tags=["recipes"])
 def read_recipe(recipe_id: int, db: Session = Depends(get_db)):
     recipe = crud.get_recipe(db, recipe_id)
     if recipe is None:
@@ -60,7 +60,7 @@ def read_recipe(recipe_id: int, db: Session = Depends(get_db)):
     return recipe
 
 
-@app.post("/recipes/", response_model=schemas.Recipe, tags=["recipes"])
+@app.post("/recipes/", response_model=schemas.RecipeResponse, tags=["recipes"])
 def create_recipe(create_request: schemas.RecipeCreate, db: Session = Depends(get_db)):
     return crud.create_recipe(db, create_request)
 
@@ -101,6 +101,24 @@ def read_ingredient(ingredient_id: int, db: Session = Depends(get_db)):
 @app.post("/ingredients/", response_model=schemas.Ingredient, tags=["ingredients"])
 def create_ingredient(create_request: schemas.IngredientCreate, db: Session = Depends(get_db)):
     return crud.create_ingredient(db, create_request)
+
+# pictures
+
+@app.post("/pictures/", response_model=schemas.Picture, tags=["pictures"])
+def create_picture(
+    create_request: schemas.PictureUpload, db: Session = Depends(get_db)
+):
+    logger.debug("create_report")
+    name = uuid.uuid4()
+    image_path = f"{name}.JPG"
+    image_bytes = base64.b64decode(create_request.img)
+    with open(f"data/{image_path}", "wb+") as f:
+        f.write(image_bytes)
+    picture_create = schemas.PictureCreate(
+        path=image_path
+    )
+    return crud.create_picture(db, picture_create)
+
 
 # controllers
 
