@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  web:
+    image: re-cipes:latest
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - "./backend/app.db:/app/app.db:rw"
