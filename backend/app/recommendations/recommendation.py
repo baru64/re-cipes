@@ -19,7 +19,7 @@ from surprise import KNNWithMeans
 # # print(df3)
 # df3.to_csv(index=None, sep='\t', path_or_buf='data/ratings10users100items.csv')
 
-# column_names = ['user_id', 'item_id', 'rating', 'timestamp']
+column_names = ['user_id', 'item_id', 'rating', 'timestamp']
 
 #functions
 
@@ -52,7 +52,21 @@ def get_n_best_rated_items_for_user(df: pd.DataFrame, n: int, user_id: int, mode
     Returns pd.Series with n best rated items (item_id, rating) for specific user_id (including predicted ratings).
     """
     df_specific_user_id = df.loc[df['user_id']==user_id]
-    print(df_specific_user_id)
+    
+    column_names = ['user_id', 'item_id', 'rating', 'timestamp']
+    
+    for x in range(222):
+        
+        if(not(x in df_specific_user_id['item_id'])):
+            prediction = round(model.predict(user_id,x).est, 2)
+            # print(prediction.est)
+            dftemp = pd.DataFrame([[user_id,x,prediction, 1]], columns = column_names)
+            df_specific_user_id = pd.concat([df_specific_user_id, dftemp])
+            # df_specific_user_id.append(dftemp, ignore_index=True)
+            
+    return df_specific_user_id
+    
+    
     
     # prediction = model.predict(user_id,33)
     # return df.groupby('item_id')['rating'].mean().sort_values(ascending=False)[:n]
@@ -60,24 +74,12 @@ def get_n_best_rated_items_for_user(df: pd.DataFrame, n: int, user_id: int, mode
 
 
 if __name__ == '__main__':
-    df4 = pd.read_csv('data/ratings10users100items.csv', sep='\t')
+    df = pd.read_csv('data/ratings10users100items.csv', sep='\t')
 
-    model = get_recommender_model(df4)
+    model = get_recommender_model(df)
 
-    prediction = model.predict(1,33)
-    print(prediction.est)
+    # prediction = model.predict(1,33)
+    # print(prediction.est)
 
-# print(get_n_best_rated_items(df4, 5))
-
-
-# r = get_n_best_rated_items(df4)
-# # print(list(r.keys()))
-# print(type(r))
-
-# # user1 = df4.loc[df4['user_id']==1]
-
-
-# print(get_n_best_rated_items_for_user(df4,5,1,))
-
-# prediction = algo.predict(1,33)
-# print(prediction.est)
+    df_with_recomms = get_n_best_rated_items_for_user(df, 5, 1, model)
+    # df_with_recomms.to_csv(index=None, sep='\t', path_or_buf='data/ratingswithrecomms_userid1.csv')
