@@ -1,3 +1,7 @@
 *__pycache__*
 backend/.venv/
+
+config.ini
+.idea/
+
 backend/venv

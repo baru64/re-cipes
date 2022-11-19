@@ -10,7 +10,7 @@
 export interface Ingredient {
     name: String;
     text?: String;
-    measure: Units;
+    measure: UNITS;
     image?: String;
 }
 
@@ -22,7 +22,7 @@ export interface Ingredient {
 //     image: String;
 // }
 export interface Product extends Ingredient {
-    quantity: Number
+    quantity: Number;
 }
 
 export interface Recipe {
@@ -33,8 +33,8 @@ export interface Recipe {
     ecoScore?: Number;
 }
 
-export enum Units {
+export enum UNITS {
     G = 'g',
     ML = 'ml',
-    PIECE = 'piece'
+    PIECE = 'piece(s)',
 }

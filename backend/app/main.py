@@ -45,15 +45,70 @@ def get_db():
     finally:
         db.close()
 
+# recipes
 
-@app.get("/items/", response_model=List[schemas.Item], tags=["items"])
-def read_reports(db: Session = Depends(get_db)):
-    return crud.get_items(db)
+@app.get("/recipes/", response_model=List[schemas.Recipe], tags=["recipes"])
+def read_recipes(db: Session = Depends(get_db)):
+    return crud.get_recipes(db)
 
 
-@app.get("/items/{item_id}", response_model=schemas.Item, tags=["items"])
-def read_report(report_id: int, db: Session = Depends(get_db)):
-    report = crud.get_item(db, report_id)
-    if report is None:
-        raise HTTPException(status_code=404, detail="Report not found")
-    return report
+@app.get("/recipes/{recipe_id}", response_model=schemas.Recipe, tags=["recipes"])
+def read_recipe(recipe_id: int, db: Session = Depends(get_db)):
+    recipe = crud.get_recipe(db, recipe_id)
+    if recipe is None:
+        raise HTTPException(status_code=404, detail="Recipe not found")
+    return recipe
+
+
+@app.post("/recipes/", response_model=schemas.Recipe, tags=["recipes"])
+def create_recipe(create_request: schemas.RecipeCreate, db: Session = Depends(get_db)):
+    return crud.create_recipe(db, create_request)
+
+# products
+
+@app.get("/products/", response_model=List[schemas.Product], tags=["products"])
+def read_products(db: Session = Depends(get_db)):
+    return crud.get_products(db)
+
+
+@app.get("/products/{product_id}", response_model=schemas.Product, tags=["products"])
+def read_product(product_id: int, db: Session = Depends(get_db)):
+    recipe = crud.get_product(db, product_id)
+    if recipe is None:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return recipe
+
+
+@app.post("/products/", response_model=schemas.Product, tags=["products"])
+def create_product(create_request: schemas.ProductCreate, db: Session = Depends(get_db)):
+    return crud.create_product(db, create_request)
+
+# ingredients
+
+@app.get("/ingredients/", response_model=List[schemas.Ingredient], tags=["ingredients"])
+def read_ingredients(db: Session = Depends(get_db)):
+    return crud.get_ingredients(db)
+
+
+@app.get("/ingredients/{ingredient_id}", response_model=schemas.Ingredient, tags=["ingredients"])
+def read_ingredient(ingredient_id: int, db: Session = Depends(get_db)):
+    recipe = crud.get_ingredient(db, ingredient_id)
+    if recipe is None:
+        raise HTTPException(status_code=404, detail="Recipe not found")
+    return recipe
+
+
+@app.post("/ingredients/", response_model=schemas.Ingredient, tags=["ingredients"])
+def create_ingredient(create_request: schemas.IngredientCreate, db: Session = Depends(get_db)):
+    return crud.create_ingredient(db, create_request)
+
+# controllers
+
+@app.post("/recipes/_search", response_model=schemas.RecipeSearchResponse, tags=["recipes"])
+def search_recipes(request: schemas.RecipeSearchRequest, db: Session = Depends(get_db)):
+    return NotImplementedError
+
+
+@app.post("/products/_search", response_model=schemas.ProductSearchResponse, tags=["products"])
+def search_products(request: schemas.ProductSearchRequest, db: Session = Depends(get_db)):
+    return NotImplementedError
