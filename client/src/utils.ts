@@ -21,6 +21,11 @@ export const getAllIngredients = (): Ingredient[] => [
 
 export const getRecipes = (): Recipe[] => {
 
+    fetch("localhost:8000/recipes").then(response => response.json())
+        .then(data =>{
+            console.log(data)
+        })
+
     return [
         {
             id: 1,
