@@ -98,3 +98,19 @@ def create_picture(db: Session, picture: schemas.PictureCreate):
 
 def get_picture(db: Session, picture_id: int):
     return db.query(models.Picture).filter(models.Picture.id == picture_id).first()
+
+
+def get_ratings(db: Session):
+    return db.query(models.Rating).all()
+
+
+def get_rating(db: Session, rating_id: int):
+    return db.query(models.Rating).filter(models.Rating.id == rating_id).first()
+
+
+def create_rating(db: Session, rating: schemas.RatingCreate):
+    new_rating = models.Rating(**rating.dict())
+    db.add(new_rating)
+    db.commit()
+    db.refresh(new_rating)
+    return new_rating
