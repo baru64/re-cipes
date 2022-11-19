@@ -52,7 +52,7 @@ def mapToBaseUnits(quantity, measure):
         case "kilogram":
             return quantity * 1000, "g"
         case _:
-            return quantity, measure
+            return quantity, "piece"
 
 
 class Recipe(object):

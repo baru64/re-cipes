@@ -51,20 +51,22 @@
 
 <LayoutGrid>
     {#each recipes as recip}
-        <Cell span={6} style="margin:-0.25rem">
+        <Cell span={3} style="margin:-0.25rem">
             <div class="card-container">
                 <Card>
-                    <div style="padding: 1rem;">
-                        <h2 class="mdc-typography--headline6" style="margin: 0 ">
-                            {recip.name}
-                        </h2>
-                    </div>
+
                     <PrimaryAction on:click={()=>{}}>
-                        <Media style="background-image: url({recip.picture});" class="card-media-16x9"
-                               aspectRatio="16x9"/>
-                        <Content class="mdc-typography--body2">
-                            {recip.description}
-                        </Content>
+                        <Media style="background-image: url({recip.picture});"
+                               class="card-media-16x9"
+                               aspectRatio="16x9">
+                            <div style="place-items: center start">
+                                <div style="background: white; height: 3rem; text-align: center">
+                                    <h2 class="mdc-typography--headline6" style="margin: 0;">
+                                        {recip.name}
+                                    </h2>
+                                </div>
+                            </div>
+                        </Media>
                     </PrimaryAction>
                 </Card>
             </div>
