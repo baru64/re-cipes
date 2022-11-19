@@ -1,17 +1,20 @@
 import type {Ingredient} from "./data";
 import {UNITS} from "./data";
 
-export const getIngredients = (): Ingredient[] => [
+export const getAllIngredients = (): Ingredient[] => [
     {
+        id: 1,
         name: 'tomato',
-        measure: UNITS.PIECE,
+        unit: UNITS.PIECE,
     },
     {
+        id: 2,
         name: 'apple',
-        measure: UNITS.PIECE,
+        unit: UNITS.PIECE,
     },
     {
+        id: 3,
         name: 'noodles',
-        measure: UNITS.G,
+        unit: UNITS.G,
     },
 ];
