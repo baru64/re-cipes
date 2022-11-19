@@ -1,13 +1,31 @@
 <script lang="ts">
-    import type {Recipe} from "./data";
     import Card, {Media, PrimaryAction,} from '@smui/card';
     import LayoutGrid, {Cell} from '@smui/layout-grid';
+    import {fetchRecipes} from "./utils";
+    import {UNITS} from "./data";
 
-    let recipes: Recipe[] = [
+
+    let recipes = [
         {
             id: 1,
             name: "Nice big Pudzian",
-            ingredients: [],
+            ingredients: [
+                {
+                    id: 1,
+                    name: 'tomato',
+                    unit: UNITS.PIECE,
+                },
+                {
+                    id: 2,
+                    name: 'apple',
+                    unit: UNITS.PIECE,
+                },
+                {
+                    id: 3,
+                    name: 'noodles',
+                    unit: UNITS.G,
+                },
+            ],
             image: "https://i.wpimg.pl/730x0/m.fitness.wp.pl/pudz-da8696f9e97d0f9f6f5e878a43c.jpg",
             steps: [],
         },
@@ -28,7 +46,23 @@
         {
             id: 4,
             name: "Happy pudzian",
-            ingredients: [],
+            ingredients: [
+                {
+                    id: 1,
+                    name: 'tomato',
+                    unit: UNITS.PIECE,
+                },
+                {
+                    id: 2,
+                    name: 'apple',
+                    unit: UNITS.PIECE,
+                },
+                {
+                    id: 3,
+                    name: 'noodles',
+                    unit: UNITS.G,
+                },
+            ],
             image: "https://i.wpimg.pl/1200x675/sf-administracja.wpcdn.pl/storage2/featured_original/62c0a585ad4e98_32516920.jpg",
             steps: [],
         },
@@ -50,25 +84,29 @@
 </script>
 
 <LayoutGrid>
-    {#each recipes as recipe}
-        <Cell span={3} style="margin:-0.25rem">
-            <div class="card-container">
-                <Card>
-                    <PrimaryAction on:click={()=>{}}>
-                        <Media style="background-image: url({recipe.image});"
-                               class="card-media-16x9"
-                               aspectRatio="16x9">
-                            <div style="place-items: center start">
-                                <div style="background: white; height: 3rem; text-align: center">
-                                    <h2 class="mdc-typography--headline6" style="margin: 0;">
-                                        {recipe.name}
-                                    </h2>
+    {#await fetchRecipes()}
+        <p> LOADING</p>
+    {:then recipes}
+        {#each recipes as recipe}
+            <Cell span={3} style="margin:-0.25rem">
+                <div class="card-container">
+                    <Card>
+                        <PrimaryAction on:click={()=>{}}>
+                            <Media style="background-image: url({recipe.image});"
+                                   class="card-media-16x9"
+                                   aspectRatio="16x9">
+                                <div style="place-items: center start">
+                                    <div style="height: 3rem ;background: floralwhite;opacity: 0.8;">
+                                        <h2 style="top:100%">
+                                            {recipe.name}
+                                        </h2>
+                                    </div>
                                 </div>
-                            </div>
-                        </Media>
-                    </PrimaryAction>
-                </Card>
-            </div>
-        </Cell>
-    {/each}
+                            </Media>
+                        </PrimaryAction>
+                    </Card>
+                </div>
+            </Cell>
+        {/each}
+    {/await}
 </LayoutGrid>

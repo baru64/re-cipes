@@ -3,10 +3,10 @@
     import Autocomplete from '@smui-extra/autocomplete'
     import LayoutGrid, {Cell} from '@smui/layout-grid';
     import Button from '@smui/button';
-    import List, {Item, Meta, Text} from '@smui/list';
+    import List, {Item, Meta, Text, Graphic} from '@smui/list';
 
     import {getAllIngredients} from "./utils";
-    import type {Ingredient, Product} from "./data";
+    import type {Ingredient} from "./data";
 
     let selectedIngredient: Ingredient = null;
     let selectedAmount: Number = null;
@@ -59,6 +59,9 @@
     <List avatarList>
         {#each items as item}
             <Item>
+                <Graphic
+                        style="background-image: url({item.image})"
+                />
                 <Text>{item.name}, {item.amount} {item.unit}</Text>
                 <Meta class="material-icons" on:click={() => handleRemoveItem(item)}>delete</Meta>
             </Item>

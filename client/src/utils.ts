@@ -1,11 +1,13 @@
-import type {Ingredient} from "./data";
+import type {Ingredient, Recipe} from "./data";
 import {UNITS} from "./data";
+import axios from 'axios';
 
 export const getAllIngredients = (): Ingredient[] => [
     {
         id: 1,
         name: 'tomato',
         unit: UNITS.PIECE,
+        image: "https://www.edamam.com/food-img/23e/23e727a14f1035bdc2733bb0477efbd2.jpg",
     },
     {
         id: 2,
@@ -18,3 +20,13 @@ export const getAllIngredients = (): Ingredient[] => [
         unit: UNITS.G,
     },
 ];
+
+export async function fetchRecipes(): Promise<Recipe[]>{
+    const resp = await fetch("http://127.0.0.1:8000/recipes/")
+    const data = await resp.json()
+
+    if (resp.ok){
+        return data
+    }
+
+}
