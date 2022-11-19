@@ -2,7 +2,7 @@
     import Paper from "@smui/paper";
     import ProductList from "./ProductList.svelte";
     import RecipeGrid from "./RecipeGrid.svelte";
-    import SearchBar from "../SearchBar.svelte";
+    import SearchBar from "./SearchBar.svelte";
 </script>
 
 <main>
