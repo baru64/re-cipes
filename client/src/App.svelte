@@ -1,10 +1,7 @@
 <script lang="ts">
+import ProductList from "./ProductList.svelte";
 </script>
 
 <main>
-    <div>
-        <p>
-            Hello world!
-        </p>
-    </div>
+    <ProductList></ProductList>
 </main>
