@@ -1,8 +1,8 @@
 <script lang="ts">
     import Card, {Media, PrimaryAction,} from '@smui/card';
     import LayoutGrid, {Cell} from '@smui/layout-grid';
-    import {fetchRecipes} from "./utils";
-    import {UNITS} from "./data";
+    import {fetchRecipes} from "../utils";
+    import {UNITS} from "../data";
 
 
     let recipes = [

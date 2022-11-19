@@ -5,8 +5,8 @@
     import Button from '@smui/button';
     import List, {Item, Meta, Text, Graphic} from '@smui/list';
 
-    import {getAllIngredients} from "./utils";
-    import type {Ingredient} from "./data";
+    import {getAllIngredients} from "../utils";
+    import type {Ingredient} from "../data";
 
     let selectedIngredient: Ingredient = null;
     let selectedAmount: Number = null;

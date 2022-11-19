@@ -1,6 +1,5 @@
 import type {Ingredient, Recipe} from "./data";
 import {UNITS} from "./data";
-import axios from 'axios';
 
 export const getAllIngredients = (): Ingredient[] => [
     {
@@ -22,8 +21,8 @@ export const getAllIngredients = (): Ingredient[] => [
 ];
 
 export async function fetchRecipes(): Promise<Recipe[]>{
-    const resp = await fetch("http://127.0.0.1:8000/recipes/")
-    const data = await resp.json()
+    const resp = await fetch("http://127.0.0.1:8000/recipes/");
+    const data = await resp.json();
 
     if (resp.ok){
         return data
