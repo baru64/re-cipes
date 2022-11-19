@@ -1,11 +1,14 @@
 <script lang="ts">
-import ProductList from "./ProductList.svelte";
-import RecipeGrid from "./RecipeGrid.svelte";
-import SearchBar from "../SearchBar.svelte";
+    import Paper from "@smui/paper";
+    import ProductList from "./ProductList.svelte";
+    import RecipeGrid from "./RecipeGrid.svelte";
+    import SearchBar from "../SearchBar.svelte";
 </script>
 
 <main>
-    <SearchBar/>
-    <RecipeGrid/>
-    <ProductList/>
+    <Paper>
+        <SearchBar/>
+        <RecipeGrid/>
+        <ProductList/>
+    </Paper>
 </main>

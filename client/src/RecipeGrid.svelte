@@ -6,7 +6,8 @@
         Media,
         MediaContent,
     } from '@smui/card';
-    import LayoutGrid, { Cell } from '@smui/layout-grid';
+    import LayoutGrid, {Cell} from '@smui/layout-grid';
+    import Paper from '@smui/paper'
 
     let recipes: Recipe[] = [
         {
@@ -49,23 +50,24 @@
 </script>
 
 <LayoutGrid>
-{#each recipes as recip}
-    <Cell span={6} style="margin:-0.25rem">
-    <div class="card-container">
-        <Card>
-            <div style="padding: 1rem;">
-                <h2 class="mdc-typography--headline6" style="margin: 0 ">
-                    {recip.name}
-                </h2>
+    {#each recipes as recip}
+        <Cell span={6} style="margin:-0.25rem">
+            <div class="card-container">
+                <Card>
+                    <div style="padding: 1rem;">
+                        <h2 class="mdc-typography--headline6" style="margin: 0 ">
+                            {recip.name}
+                        </h2>
+                    </div>
+                    <PrimaryAction on:click={()=>{}}>
+                        <Media style="background-image: url({recip.picture});" class="card-media-16x9"
+                               aspectRatio="16x9"/>
+                        <Content class="mdc-typography--body2">
+                            {recip.description}
+                        </Content>
+                    </PrimaryAction>
+                </Card>
             </div>
-            <PrimaryAction on:click={()=>{}}>
-                <Media style="background-image: url({recip.picture});" class="card-media-16x9" aspectRatio="16x9"/>
-                <Content class="mdc-typography--body2">
-                    {recip.description}
-                </Content>
-            </PrimaryAction>
-        </Card>
-    </div>
-    </Cell>
-{/each}
+        </Cell>
+    {/each}
 </LayoutGrid>

@@ -41,38 +41,34 @@
     }
 </script>
 
-<Paper>
-    <h3>Select ingredient and amount</h3>
-    <LayoutGrid>
-        <Cell span={6}>
-            <Autocomplete
-                    options={ingredients.map(({name}) => name)}
-                    bind:value={selectedIngredientName}
-                    label="Product"
-            />
-        </Cell>
-        <Cell span={5}>
-            <Textfield label="Amount" bind:value={selectedAmount} type="number" input$min="0"
-                       suffix={selectedIngredient?.measure}/>
-        </Cell>
-        <Cell span={1}>
-            <Button on:click={() => handleAddProduct()}
-                    disabled={!selectedIngredient || (!selectedAmount && selectedAmount === 0)}
-            >
-                Add
-            </Button>
-        </Cell>
-    </LayoutGrid>
-</Paper>
+<h3>Select ingredient and amount</h3>
+<LayoutGrid>
+    <Cell span={6}>
+        <Autocomplete
+                options={ingredients.map(({name}) => name)}
+                bind:value={selectedIngredientName}
+                label="Product"
+        />
+    </Cell>
+    <Cell span={5}>
+        <Textfield label="Amount" bind:value={selectedAmount} type="number" input$min="0"
+                   suffix={selectedIngredient?.measure}/>
+    </Cell>
+    <Cell span={1}>
+        <Button on:click={() => handleAddProduct()}
+                disabled={!selectedIngredient || (!selectedAmount && selectedAmount === 0)}
+        >
+            Add
+        </Button>
+    </Cell>
+</LayoutGrid>
 {#if products.length}
-    <Paper>
-        <List avatarList>
-            {#each products as product}
-                <Item>
-                    <Text>{product.name}, {product.quantity} {product.measure}</Text>
-                    <Meta class="material-icons" on:click={() => handleRemoveProduct(product)}>delete</Meta>
-                </Item>
-            {/each}
-        </List>
-    </Paper>
+    <List avatarList>
+        {#each products as product}
+            <Item>
+                <Text>{product.name}, {product.quantity} {product.measure}</Text>
+                <Meta class="material-icons" on:click={() => handleRemoveProduct(product)}>delete</Meta>
+            </Item>
+        {/each}
+    </List>
 {/if}
