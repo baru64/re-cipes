@@ -66,6 +66,7 @@ def read_recipes_pretty(db: Session = Depends(get_db)):
         for i in r.ingredients:
             ingr = schemas.Ingredient.from_orm(crud.get_ingredient(db, i.ingredient_id))
             ingredients.append(schemas.IngredientInfo(
+                id=ingr.id,
                 image=ingr.picture,
                 name=ingr.name,
                 amount=i.amount,

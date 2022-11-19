@@ -41,6 +41,7 @@ class RecipeResponse(BaseModel):
 
 
 class IngredientInfo(BaseModel):
+    id: int
     image: Optional[str]
     name: str
     amount: int
