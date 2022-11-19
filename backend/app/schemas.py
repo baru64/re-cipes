@@ -40,6 +40,23 @@ class RecipeResponse(BaseModel):
         orm_mode = True
 
 
+class IngredientInfo(BaseModel):
+    image: Optional[str]
+    name: str
+    amount: int
+    unit: str
+
+
+class RecipeExtended(BaseModel):
+    id: int
+    name: str
+    description: Optional[str] = None
+    steps: Optional[List[str]] = None
+    image: Optional[str]
+    eco_score: Optional[int]
+    ingredients: List[IngredientInfo]
+
+
 class RecipeCreate(RecipeBase):
     pass
 
