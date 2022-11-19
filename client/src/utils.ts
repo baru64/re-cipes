@@ -6,6 +6,7 @@ export const getAllIngredients = (): Ingredient[] => [
         id: 1,
         name: 'tomato',
         unit: UNITS.PIECE,
+        image: "https://www.edamam.com/food-img/23e/23e727a14f1035bdc2733bb0477efbd2.jpg",
     },
     {
         id: 2,
