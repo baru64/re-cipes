@@ -1,40 +1,25 @@
-// export interface Ingredient {
-//     name: String;
-//     text: String;
-//     quantity: Number;
-//     measure: Units;
-//     food: String;
-//     foodId?: String;
-//     image?: String;
-// }
 export interface Ingredient {
+    id: Number;
     name: String;
-    text?: String;
-    measure: UNITS;
+    unit: UNITS;
     image?: String;
+    amount?: Number;
 }
 
-// export interface Product {
-//     food: String;
-//     name: String;
-//     quantity: Number;
-//     measure: Units;
-//     image: String;
-// }
 export interface Product extends Ingredient {
     quantity: Number;
 }
 
 export interface Recipe {
+    id: Number;
     name: String;
-    description: String;
+    image: String;
     ingredients: Ingredient[];
-    picture: String;
-    ecoScore?: Number;
+    steps: String[];
 }
 
 export enum UNITS {
     G = 'g',
     ML = 'ml',
-    PIECE = 'piece(s)',
+    PIECE = 'pieces',
 }

@@ -52,7 +52,7 @@ def mapToBaseUnits(quantity, measure):
         case "kilogram":
             return quantity * 1000, "g"
         case _:
-            return quantity, measure
+            return quantity, "piece"
 
 
 class Recipe(object):
@@ -101,4 +101,4 @@ def get_recipes(key_words):
 
 
 if __name__ == "__main__":
-    get_recipes(["chicken", "tomato", "broccoli", "patato", "beer", "flour", "egg"])
+    get_recipes(["chicken", "tomato", "broccoli", "potato", "egg", "flour", "pasta","curry","basile"])
