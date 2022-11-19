@@ -1,43 +1,35 @@
 <script lang="ts">
     import Textfield from '@smui/textfield'
     import Autocomplete from '@smui-extra/autocomplete'
-    import Paper from '@smui/paper';
     import LayoutGrid, {Cell} from '@smui/layout-grid';
     import Button from '@smui/button';
-    import List, {Item, Meta, Text} from '@smui/list';
+    import List, {Item, Meta, Text, Graphic} from '@smui/list';
 
-    import {getIngredients} from "./utils";
-    import type {Ingredient, Product} from "./data";
+    import {getAllIngredients} from "./utils";
+    import type {Ingredient} from "./data";
 
-    let selectedIngredientName = '';
     let selectedIngredient: Ingredient = null;
     let selectedAmount: Number = null;
-    let products: Product[] = [];
+    let items: Ingredient[] = [];
 
-    const ingredients = getIngredients();
+    const allIngredients = getAllIngredients();
 
-    $: selectedIngredient = ingredients.find(ingredient => ingredient.name === selectedIngredientName);
-
-    const handleAddProduct = () => {
-        const newProduct: Product = {
-            ...selectedIngredient,
-            quantity: selectedAmount,
-        }
-        if (!!products.find((product) => product.name === newProduct.name)) {
-            products = products.map(product => product.name === newProduct.name ? {
-                ...product,
-                quantity: product.quantity + newProduct.quantity,
-            } : product)
+    const handleAddItem = () => {
+        if (!!items.find((item) => item.name === selectedIngredient.name)) {
+            items = items.map(item => item.name === selectedIngredient.name ? {
+                ...item,
+                amount: item.amount + selectedAmount,
+            } : item)
         } else {
-            products = [...products, newProduct]
+            items = [...items, {...selectedIngredient, amount: selectedAmount}]
         }
 
-        selectedIngredientName = '';
+        selectedIngredient = null;
         selectedAmount = null;
     }
 
-    const handleRemoveProduct = (product: Product) => {
-        products = products.filter(el => el.name !== product.name)
+    const handleRemoveItem = (item: Ingredient) => {
+        items = items.filter(el => el.name !== item.name)
     }
 </script>
 
@@ -45,29 +37,33 @@
 <LayoutGrid>
     <Cell span={6}>
         <Autocomplete
-                options={ingredients.map(({name}) => name)}
-                bind:value={selectedIngredientName}
+                options={allIngredients}
+                getOptionLabel={ingredient => ingredient?.name ?? ''}
+                bind:value={selectedIngredient}
                 label="Product"
         />
     </Cell>
     <Cell span={5}>
         <Textfield label="Amount" bind:value={selectedAmount} type="number" input$min="0"
-                   suffix={selectedIngredient?.measure}/>
+                   suffix={selectedIngredient?.unit}/>
     </Cell>
     <Cell span={1}>
-        <Button on:click={() => handleAddProduct()}
+        <Button on:click={() => handleAddItem()}
                 disabled={!selectedIngredient || (!selectedAmount && selectedAmount === 0)}
         >
             Add
         </Button>
     </Cell>
 </LayoutGrid>
-{#if products.length}
+{#if items.length}
     <List avatarList>
-        {#each products as product}
+        {#each items as item}
             <Item>
-                <Text>{product.name}, {product.quantity} {product.measure}</Text>
-                <Meta class="material-icons" on:click={() => handleRemoveProduct(product)}>delete</Meta>
+                <Graphic
+                        style="background-image: url({item.image})"
+                />
+                <Text>{item.name}, {item.amount} {item.unit}</Text>
+                <Meta class="material-icons" on:click={() => handleRemoveItem(item)}>delete</Meta>
             </Item>
         {/each}
     </List>

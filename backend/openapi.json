@@ -1,0 +1,959 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/recipes/": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Read Recipes",
+        "operationId": "read_recipes_recipes__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Read Recipes Recipes  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RecipeResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Create Recipe",
+        "operationId": "create_recipe_recipes__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipes-pretty/": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Read Recipes Pretty",
+        "operationId": "read_recipes_pretty_recipes_pretty__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Read Recipes Pretty Recipes Pretty  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RecipeExtended"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipes/{recipe_id}": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Read Recipe",
+        "operationId": "read_recipe_recipes__recipe_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Recipe Id",
+              "type": "integer"
+            },
+            "name": "recipe_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Read Products",
+        "operationId": "read_products_products__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Read Products Products  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Create Product",
+        "operationId": "create_product_products__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{product_id}": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Read Product",
+        "operationId": "read_product_products__product_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "integer"
+            },
+            "name": "product_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ingredients/": {
+      "get": {
+        "tags": [
+          "ingredients"
+        ],
+        "summary": "Read Ingredients",
+        "operationId": "read_ingredients_ingredients__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Read Ingredients Ingredients  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ingredient"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ingredients"
+        ],
+        "summary": "Create Ingredient",
+        "operationId": "create_ingredient_ingredients__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngredientCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ingredient"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ingredients/{ingredient_id}": {
+      "get": {
+        "tags": [
+          "ingredients"
+        ],
+        "summary": "Read Ingredient",
+        "operationId": "read_ingredient_ingredients__ingredient_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Ingredient Id",
+              "type": "integer"
+            },
+            "name": "ingredient_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ingredient"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pictures/": {
+      "post": {
+        "tags": [
+          "pictures"
+        ],
+        "summary": "Create Picture",
+        "operationId": "create_picture_pictures__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PictureUpload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Picture"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipes/_search": {
+      "post": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Search Recipes",
+        "operationId": "search_recipes_recipes__search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeSearchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/_search": {
+      "post": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Search Products",
+        "operationId": "search_products_products__search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductSearchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BaseIngredientAmount": {
+        "title": "BaseIngredientAmount",
+        "required": [
+          "ingredient_id",
+          "amount"
+        ],
+        "type": "object",
+        "properties": {
+          "ingredient_id": {
+            "title": "Ingredient Id",
+            "type": "integer"
+          },
+          "amount": {
+            "title": "Amount",
+            "type": "integer"
+          }
+        }
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "Ingredient": {
+        "title": "Ingredient",
+        "required": [
+          "name",
+          "amount_unit",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "amount_unit": {
+            "title": "Amount Unit",
+            "type": "string"
+          },
+          "picture_id": {
+            "title": "Picture Id",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "picture": {
+            "title": "Picture",
+            "type": "string"
+          }
+        }
+      },
+      "IngredientCreate": {
+        "title": "IngredientCreate",
+        "required": [
+          "name",
+          "amount_unit"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "amount_unit": {
+            "title": "Amount Unit",
+            "type": "string"
+          },
+          "picture_id": {
+            "title": "Picture Id",
+            "type": "integer"
+          }
+        }
+      },
+      "IngredientInfo": {
+        "title": "IngredientInfo",
+        "required": [
+          "id",
+          "name",
+          "amount",
+          "unit"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "image": {
+            "title": "Image",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "amount": {
+            "title": "Amount",
+            "type": "integer"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          }
+        }
+      },
+      "Picture": {
+        "title": "Picture",
+        "required": [
+          "path",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          }
+        }
+      },
+      "PictureUpload": {
+        "title": "PictureUpload",
+        "required": [
+          "img"
+        ],
+        "type": "object",
+        "properties": {
+          "img": {
+            "title": "Img",
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "Product": {
+        "title": "Product",
+        "required": [
+          "name",
+          "ingredient_id",
+          "amount",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "ingredient_id": {
+            "title": "Ingredient Id",
+            "type": "integer"
+          },
+          "picture_id": {
+            "title": "Picture Id",
+            "type": "integer"
+          },
+          "amount": {
+            "title": "Amount",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "picture": {
+            "title": "Picture",
+            "type": "string"
+          }
+        }
+      },
+      "ProductCreate": {
+        "title": "ProductCreate",
+        "required": [
+          "name",
+          "ingredient_id",
+          "amount"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "ingredient_id": {
+            "title": "Ingredient Id",
+            "type": "integer"
+          },
+          "picture_id": {
+            "title": "Picture Id",
+            "type": "integer"
+          },
+          "amount": {
+            "title": "Amount",
+            "type": "integer"
+          }
+        }
+      },
+      "ProductSearchRequest": {
+        "title": "ProductSearchRequest",
+        "required": [
+          "ingredients"
+        ],
+        "type": "object",
+        "properties": {
+          "ingredients": {
+            "title": "Ingredients",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BaseIngredientAmount"
+            }
+          }
+        }
+      },
+      "ProductSearchResponse": {
+        "title": "ProductSearchResponse",
+        "required": [
+          "products"
+        ],
+        "type": "object",
+        "properties": {
+          "products": {
+            "title": "Products",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        }
+      },
+      "Recipe": {
+        "title": "Recipe",
+        "required": [
+          "name",
+          "ingredients",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "picture_id": {
+            "title": "Picture Id",
+            "type": "integer"
+          },
+          "eco_score": {
+            "title": "Eco Score",
+            "type": "integer"
+          },
+          "ingredients": {
+            "title": "Ingredients",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BaseIngredientAmount"
+            }
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "picture": {
+            "title": "Picture",
+            "type": "string"
+          }
+        }
+      },
+      "RecipeCreate": {
+        "title": "RecipeCreate",
+        "required": [
+          "name",
+          "ingredients"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "picture_id": {
+            "title": "Picture Id",
+            "type": "integer"
+          },
+          "eco_score": {
+            "title": "Eco Score",
+            "type": "integer"
+          },
+          "ingredients": {
+            "title": "Ingredients",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BaseIngredientAmount"
+            }
+          }
+        }
+      },
+      "RecipeExtended": {
+        "title": "RecipeExtended",
+        "required": [
+          "id",
+          "name",
+          "ingredients"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "steps": {
+            "title": "Steps",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "image": {
+            "title": "Image",
+            "type": "string"
+          },
+          "eco_score": {
+            "title": "Eco Score",
+            "type": "integer"
+          },
+          "ingredients": {
+            "title": "Ingredients",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IngredientInfo"
+            }
+          }
+        }
+      },
+      "RecipeResponse": {
+        "title": "RecipeResponse",
+        "required": [
+          "id",
+          "name",
+          "ingredients"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "picture_id": {
+            "title": "Picture Id",
+            "type": "integer"
+          },
+          "eco_score": {
+            "title": "Eco Score",
+            "type": "integer"
+          },
+          "ingredients": {
+            "title": "Ingredients",
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "RecipeSearchRequest": {
+        "title": "RecipeSearchRequest",
+        "required": [
+          "ingredients"
+        ],
+        "type": "object",
+        "properties": {
+          "ingredients": {
+            "title": "Ingredients",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BaseIngredientAmount"
+            }
+          }
+        }
+      },
+      "RecipeSearchResponse": {
+        "title": "RecipeSearchResponse",
+        "required": [
+          "recipes"
+        ],
+        "type": "object",
+        "properties": {
+          "recipes": {
+            "title": "Recipes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Recipe"
+            }
+          }
+        }
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

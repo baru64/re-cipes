@@ -52,6 +52,40 @@ def read_recipes(db: Session = Depends(get_db)):
     return crud.get_recipes(db)
 
 
+@app.get("/recipes-pretty/", response_model=List[schemas.RecipeExtended], tags=["recipes"])
+def read_recipes_pretty(db: Session = Depends(get_db)):
+    recipes =  [schemas.RecipeResponse.from_orm(r) for r in crud.get_recipes(db)]
+    extended_recipes = []
+    all_ingredients = [schemas.Ingredient.from_orm(i) for i in crud.get_ingredients(db)]
+    for r in recipes:
+        picture_path = None
+        if r.picture_id is not None:
+            pic = schemas.Picture.from_orm(crud.get_picture(db, r.picture_id))
+            picture_path = pic.path
+        ingredients = []
+        for i in r.ingredients:
+            ingr = schemas.Ingredient.from_orm(crud.get_ingredient(db, i.ingredient_id))
+            ingredients.append(schemas.IngredientInfo(
+                id=ingr.id,
+                image=ingr.picture,
+                name=ingr.name,
+                amount=i.amount,
+                unit=ingr.amount_unit
+            ))
+        e = schemas.RecipeExtended(
+            id=r.id,
+            name=r.name,
+            description=r.description,
+            steps=r.description.splitlines() if r.description is not None else None,
+            image=picture_path,
+            eco_score=r.eco_score,
+            ingredients=ingredients
+        )
+        extended_recipes.append(e)
+
+    return extended_recipes
+
+
 @app.get("/recipes/{recipe_id}", response_model=schemas.RecipeResponse, tags=["recipes"])
 def read_recipe(recipe_id: int, db: Session = Depends(get_db)):
     recipe = crud.get_recipe(db, recipe_id)

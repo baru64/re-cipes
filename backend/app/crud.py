@@ -94,3 +94,7 @@ def create_picture(db: Session, picture: schemas.PictureCreate):
     db.commit()
     db.refresh(new_picture)
     return new_picture
+
+
+def get_picture(db: Session, picture_id: int):
+    return db.query(models.Picture).filter(models.Picture.id == picture_id).first()
