@@ -5,8 +5,8 @@
     import {UNITS} from "./data";
     import {Input} from "@smui/textfield";
     import Paper from "@smui/paper";
-    import {Icon} from '@smui/common'
-
+    import {Icon} from '@smui/common';
+    import {Link} from "svelte-navigator";
 
     let recipes = [
         {
@@ -122,21 +122,23 @@
         {#each recipes.slice(0, 9) as recipe}
             <Cell span={4} style="margin:-0.25rem">
                 <div class="card-container">
-                    <Card>
-                        <PrimaryAction on:click={()=>{}}>
-                            <Media style="background-image: url({recipe.image});"
-                                   class="card-media-16x9"
-                                   aspectRatio="16x9">
-                                <div style="place-items: center start">
-                                    <div style="height: 3rem ;background: floralwhite;opacity: 0.8;">
-                                        <h2 style="top:100%">
-                                            {recipe.name}
-                                        </h2>
+                    <Link to="recipe/{recipe.id}">
+                        <Card>
+                            <PrimaryAction on:click={()=>{}}>
+                                <Media style="background-image: url({recipe.image});"
+                                       class="card-media-16x9"
+                                       aspectRatio="16x9">
+                                    <div style="place-items: center start">
+                                        <div style="height: 3rem ;background: floralwhite;opacity: 0.8;">
+                                            <h2 style="top:100%">
+                                                {recipe.name}
+                                            </h2>
+                                        </div>
                                     </div>
-                                </div>
-                            </Media>
-                        </PrimaryAction>
-                    </Card>
+                                </Media>
+                            </PrimaryAction>
+                        </Card>
+                    </Link>
                 </div>
             </Cell>
         {/each}
