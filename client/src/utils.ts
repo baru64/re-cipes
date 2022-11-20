@@ -1,52 +1,47 @@
-import type {Ingredient, Recipe} from "./data";
-import {UNITS} from "./data";
+import type {Ingredient, Recipe, SearchPayload} from "./data";
 
 const API_URL = 'http://127.0.0.1:8000';
 
-export const getAllIngredients = (): Ingredient[] => [
-    {
-        id: 1,
-        name: 'tomato',
-        unit: UNITS.PIECE,
-        image: "https://www.edamam.com/food-img/23e/23e727a14f1035bdc2733bb0477efbd2.jpg",
-    },
-    {
-        id: 2,
-        name: 'apple',
-        unit: UNITS.PIECE,
-    },
-    {
-        id: 3,
-        name: 'noodles',
-        unit: UNITS.G,
-    },
-];
+export const callAPI = async (url: String, method?: string, body?: string) => {
+    const response = await fetch(
+        `${API_URL}${url}`,
+        (method && body) ? {
+            method,
+            body,
+        } : {},
+    );
+    const data = await response.json();
+
+    if (response.ok) {
+        return data;
+    }
+}
+
+export const searchRecipes = async (items: SearchPayload[]) => {
+    const result = await (callAPI(
+            '/recipe/_search',
+            "POST",
+            JSON.stringify(items))
+    );
+    return result;
+}
+
+export const getAllIngredients = async (): Promise<Ingredient[]> => {
+    const result = await callAPI('/ingredients');
+    return result;
+}
 
 export async function fetchRecipes(): Promise<Recipe[]> {
-    const resp = await fetch(`${API_URL}/recipes-pretty/`);
-    const data = await resp.json();
-
-    if (resp.ok) {
-        return data
-    }
+    const result = await callAPI('/recipes');
+    return result;
 }
 
 export const fetchSingleRecipe = async (id: Number) => {
-    const response = await fetch(`${API_URL}/recipes/${id}`)
-    const data = await response.json();
-
-    if (response.ok) {
-        return data;
-    }
+    const result = await callAPI(`/recipes/${id}`);
+    return result
 }
 
 export const fetchSingleIngredient = async (id: Number) => {
-    const response = await fetch(`${API_URL}/ingredients/${id}`)
-    const data = await response.json();
-
-    console.log(data);
-
-    if (response.ok) {
-        return data;
-    }
+    const result = await callAPI(`/ingredients/${id}`);
+    return result;
 }

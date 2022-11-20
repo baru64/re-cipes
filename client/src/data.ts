@@ -1,26 +1,30 @@
 export interface Ingredient {
     id: Number;
     name: String;
-    unit: UNITS;
-    image?: String;
+    description?: String;
+    amount_unit: UNITS;
+    picture?: String;
+    picture_id: Number;
     amount?: Number;
-}
-
-export interface Product extends Ingredient {
-    quantity: Number;
 }
 
 export interface Recipe {
     id: Number;
     name: String;
-    image: String;
+    description: String;
+    picture_id: Number;
+    picture: String;
+    eco_score: Number;
     ingredients: Ingredient[];
-    steps: String[];
-    description?: String[];
 }
 
 export enum UNITS {
     G = 'g',
     ML = 'ml',
     PIECE = 'pieces',
+}
+
+export interface SearchPayload {
+    ingredient_id: Number;
+    amount: Number;
 }

@@ -4,9 +4,9 @@
     import LayoutGrid, {Cell} from '@smui/layout-grid';
     import Button from '@smui/button';
     import List, {Graphic, Item, Meta, Text} from '@smui/list';
-    import {items} from "../store";
+    import {items, recipeItems} from "../store";
 
-    import {getAllIngredients} from "./utils";
+    import {getAllIngredients, searchRecipes} from "./utils";
     import type {Ingredient} from "./data";
 
     let selectedIngredient: Ingredient = null;
@@ -14,6 +14,7 @@
     let itemsLen: Number = null;
     let currentItems: Ingredient[]
     let result = null
+    let allIngredients = [];
 
     items.subscribe(items => {
         itemsLen = items.length
@@ -21,12 +22,14 @@
         doPost()
     })
 
-    const allIngredients = getAllIngredients();
+    const fetchIngredients = async () => {
+        allIngredients = await getAllIngredients();
+    }
 
     const handleAddItem = () => {
         items.update(items => {
-            if (!!items.find((item) => item.name === selectedIngredient.name)) {
-                items = items.map(item => item.name === selectedIngredient.name ? {
+            if (!!items.find((item) => item.id === selectedIngredient.id)) {
+                items = items.map(item => item.id === selectedIngredient.id ? {
                     ...item,
                     amount: item.amount + selectedAmount,
                 } : item)
@@ -41,21 +44,19 @@
     }
 
     async function doPost() {
-        if (currentItems.length !== 0) {
-            await fetch("127.0.0.1:8000/fridge",
-                {
-                    method: "POST",
-                    body: JSON.stringify(
-                        currentItems
-                    )
-                })
-            console.log("POST",JSON.stringify(currentItems))
+        if (!!currentItems.length) {
+            const searchItems = currentItems.map(({id, amount}) => ({ingredient_id: id, amount}))
+            const recipes = await searchRecipes(searchItems)
+            recipeItems.set(recipes);
+            console.log("POST",JSON.stringify(searchItems))
         }
     }
 
     const handleRemoveItem = (item: Ingredient) => {
         items.update(items => items.filter(el => el.name !== item.name))
     }
+
+    $: fetchIngredients();
 </script>
 
 <h3>Select ingredient and amount</h3>
@@ -70,7 +71,7 @@
     </Cell>
     <Cell span={5}>
         <Textfield label="Amount" bind:value={selectedAmount} type="number" input$min="0"
-                   suffix={selectedIngredient?.unit}/>
+                   suffix={selectedIngredient?.amount_unit}/>
     </Cell>
     <Cell span={1}>
         <Button on:click={() => handleAddItem()}
@@ -85,9 +86,9 @@
         {#each $items as item}
             <Item>
                 <Graphic
-                        style="background-image: url({item.image})"
+                        style="background-image: url({item.picture})"
                 />
-                <Text>{item.name}, {item.amount} {item.unit}</Text>
+                <Text>{item.name}, {item.amount} {item.amount_unit}</Text>
                 <Meta class="material-icons" on:click={() => handleRemoveItem(item)}>delete</Meta>
             </Item>
         {/each}
