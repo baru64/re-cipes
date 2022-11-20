@@ -14,7 +14,7 @@ services:
   static:
     image: nginx
     volumes:
-      - "./static/:/usr/share/nginx/html:ro"
+      - "./static/:/usr/share/nginx/html/static/:ro"
     ports:
       - "8080:80"
 
