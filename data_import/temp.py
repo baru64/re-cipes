@@ -23,6 +23,7 @@ recipes_points = []
 
 with open("data.json", "rb") as f:
     data = json.load(f)
+    
 #     for x in data:
 #         points = 0
 #         for y in x['ingredients']:
@@ -31,4 +32,4 @@ with open("data.json", "rb") as f:
 #         recipes_points.append((x['name'], points))
 # result = [x for x in recipes_points if x[1] > 0]
 # print(result)
-print(get_eco_recommendation(my_fridge, data))
+# print(get_eco_recommendation(my_fridge, data))
