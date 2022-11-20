@@ -10,11 +10,13 @@ export const callAPI = async (url: String, method?: string, body?: string) => {
             body,
         } : {},
     );
+    console.log(response);
     const data = await response.json();
 
     if (response.ok) {
         return data;
     }
+    throw Error(`${response.status}: ${response.statusText}`)
 }
 
 export const searchRecipes = async (items: SearchPayload[]) => {

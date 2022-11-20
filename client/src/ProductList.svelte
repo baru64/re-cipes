@@ -46,8 +46,12 @@
     async function doPost() {
         if (!!currentItems.length) {
             const searchItems = currentItems.map(({id, amount}) => ({ingredient_id: id, amount}))
-            const recipes = await searchRecipes(searchItems)
-            recipeItems.set(recipes);
+            try {
+                const recipes = await searchRecipes(searchItems)
+                recipeItems.set(recipes);
+            } catch(error) {
+                console.log(error);
+            }
             console.log("POST",JSON.stringify(searchItems))
         }
     }
