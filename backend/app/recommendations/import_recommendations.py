@@ -4,7 +4,8 @@ with open("./data/ratingswithrecomms_userid1.csv", "r") as f:
     lines = f.readlines()
 
 for line in lines[1:]:
-    s = line.split("\t")
+    s = line.split(",")
+    print(s[0])
     data = {
         "user_id": int(s[0]),
         "recipe_id": int(s[1]),

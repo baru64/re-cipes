@@ -93,7 +93,7 @@ def get_search(cart):
         recipe_ids = recipe_points_df['recipe_id']
         for x in recipe_ids:
             for y in rrr:
-                if(x == y['id']): # recipe_id
+                if(x == y['recipe_id']): # recipe_id
                     ratings.append(y['rating'])
         print(f"Ratings:{ratings}")
         print(len(ratings))
@@ -121,18 +121,6 @@ if __name__ == '__main__':
     ]
     }
     get_search(example_cart)
-    
-    
-    
-    # print(recipe_points_df)
-    # recipe ratings 
-    # recipe_content_response = requests.get("http://localhost:8000/ratings/")
-    # if(recipe_content_response.status_code == 200):
-    #     print("The request was a success!")
-    #     # Code here will only run if the request is successful
-    #     ratings_recipes_df = get_recipe_content_count(my_cart, recipe_content_response.json())
-    # elif(recipe_content_response.status_code == 404):
-    #     print("Result not found!")
 
     
         
