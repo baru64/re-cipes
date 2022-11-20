@@ -140,3 +140,20 @@ class PictureUpload(BaseModel):
 
 class PictureCreate(PictureBase):
     pass
+
+
+class RatingBase(BaseModel):
+    user_id: int
+    recipe_id: int
+    rating: float
+
+
+class RatingCreate(RatingBase):
+    pass
+
+
+class Rating(RatingBase):
+    id: int
+
+    class Config:
+        orm_mode = True

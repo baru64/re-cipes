@@ -59,3 +59,12 @@ class Picture(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     path = Column(String, index=True)
+
+
+class Rating(Base):
+    __tablename__ = "ratings"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(String, index=True)
+    recipe_id = Column(Integer, index=True)
+    rating = Column(Float, index=True)

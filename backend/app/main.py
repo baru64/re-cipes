@@ -154,6 +154,25 @@ def create_picture(
     return crud.create_picture(db, picture_create)
 
 
+# ratings
+
+@app.get("/ratings/", response_model=List[schemas.Rating], tags=["ratings"])
+def read_ratings(db: Session = Depends(get_db)):
+    return crud.get_ratings(db)
+
+
+@app.get("/ratings/{rating_id}", response_model=schemas.Rating, tags=["ratings"])
+def read_rating(ingredient_id: int, db: Session = Depends(get_db)):
+    recipe = crud.get_ingredient(db, ingredient_id)
+    if recipe is None:
+        raise HTTPException(status_code=404, detail="Recipe not found")
+    return recipe
+
+
+@app.post("/ratings/", response_model=schemas.Rating, tags=["ratings"])
+def create_rating(create_request: schemas.RatingCreate, db: Session = Depends(get_db)):
+    return crud.create_rating(db, create_request)
+
 # controllers
 
 @app.post("/recipes/_search", response_model=schemas.RecipeSearchResponse, tags=["recipes"])
