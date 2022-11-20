@@ -82,7 +82,7 @@ def get_search(cart):
     elif(recipe_content_response.status_code == 404):
         print("Result not found!")
         
-    print(recipe_points_df.shape[0])
+    # print(recipe_points_df.shape[0])
     ratings_recipes_response = requests.get("http://localhost:8000/ratings/")
     if(ratings_recipes_response.status_code == 200):
         print("The request was a success!")
@@ -95,15 +95,20 @@ def get_search(cart):
             for y in rrr:
                 if(x == y['recipe_id']): # recipe_id
                     ratings.append(y['rating'])
-        print(f"Ratings:{ratings}")
-        print(len(ratings))
+        # print(f"Ratings:{ratings}")
+        # print(len(ratings))
         recipe_points_df['rating'] = ratings
         # print(recipe_points_df)
         sorted_df = recipe_points_df.sort_values(by=["points", "rating"], ascending=[False, False])
-        print(sorted_df)
+        return sorted_df
     elif(ratings_recipes_response.status_code == 404):
         print("Result not found!")
         
+def get_n_best_recipes_dict(df: pd.DataFrame, n_best: int):
+    df_head = df.head(n_best)
+    result = [{'id':key+1,'recipe_id':value} for (key, value)in enumerate(df_head['recipe_id'])]
+    print(result)
+
 if __name__ == '__main__':
     
     #_search
@@ -120,7 +125,7 @@ if __name__ == '__main__':
         }
     ]
     }
-    get_search(example_cart)
-
+    search_result = get_search(example_cart)
+    get_n_best_recipes_dict(search_result, 9)
     
         
