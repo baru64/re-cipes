@@ -16,7 +16,15 @@ def get_recipes(db: Session):
 
 
 def get_recipe(db: Session, recipe_id: int):
-    return db.query(models.Recipe).filter(models.Recipe.id == recipe_id).first()
+    recipe_db = db.query(models.Recipe).filter(models.Recipe.id == recipe_id).first()
+    recipe = schemas.RecipeResponse.from_orm(recipe_db)
+    if recipe.picture_id is not None:
+        pic_db = db.query(models.Picture).filter(models.Picture.id == recipe.picture_id).first()
+        if pic_db is not None:
+            pic = schemas.Picture.from_orm(pic_db)
+            recipe.picture = pic.path
+    return recipe
+
 
 
 def create_recipe(db: Session, recipe: schemas.RecipeCreate):
