@@ -184,6 +184,11 @@ def read_rating(ingredient_id: int, db: Session = Depends(get_db)):
 def create_rating(create_request: schemas.RatingCreate, db: Session = Depends(get_db)):
     return crud.create_rating(db, create_request)
 
+
+@app.delete("/ratings/", tags=["ratings"])
+def delete_all_ratings(db: Session = Depends(get_db)):
+    crud.delete_all_ratings(db)
+
 # controllers
 
 @app.post("/recipes/_search", response_model=schemas.RecipeSearchResponse, tags=["recipes"])

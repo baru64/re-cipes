@@ -120,3 +120,10 @@ def create_rating(db: Session, rating: schemas.RatingCreate):
     db.commit()
     db.refresh(new_rating)
     return new_rating
+
+def delete_all_ratings(db: Session):
+    try:
+        db.query(models.Rating).delete()
+        db.commit()
+    except:
+        db.rollback()
