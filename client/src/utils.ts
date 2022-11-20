@@ -2,12 +2,13 @@ import type {Ingredient, Recipe, SearchPayload} from "./data";
 
 const API_URL = 'http://127.0.0.1:8000';
 
-export const callAPI = async (url: String, method?: string, body?: string) => {
+export const callAPI = async (url: String, method?: string, body?: string, headers?: any) => {
     const response = await fetch(
         `${API_URL}${url}`,
-        (method && body) ? {
+        (method && body && headers) ? {
             method,
             body,
+            headers,
         } : {},
     );
     console.log(response);
@@ -21,9 +22,11 @@ export const callAPI = async (url: String, method?: string, body?: string) => {
 
 export const searchRecipes = async (items: SearchPayload[]) => {
     const result = await (callAPI(
-            '/recipe/_search',
+            '/recipes/_search',
             "POST",
-            JSON.stringify(items))
+            JSON.stringify({ingredients: items}),
+            {"content-type": 'application/json'}
+            )
     );
     return result;
 }
