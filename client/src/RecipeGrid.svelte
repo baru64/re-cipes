@@ -12,6 +12,7 @@
     let recipes = [];
 
     recipeItems.subscribe(recipeItems => {
+        console.log(recipeItems)
         recipes = recipeItems;
     })
 

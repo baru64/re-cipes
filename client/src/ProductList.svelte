@@ -48,7 +48,8 @@
             const searchItems = currentItems.map(({id, amount}) => ({ingredient_id: id, amount}))
             try {
                 const recipes = await searchRecipes(searchItems)
-                recipeItems.set(recipes);
+                const parsedRecipes = Object.keys(recipes).map(key => recipes[key]);
+                recipeItems.set(parsedRecipes);
             } catch(error) {
                 console.log(error);
             }
