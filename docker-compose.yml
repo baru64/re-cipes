@@ -11,4 +11,10 @@ services:
     volumes:
       - "./backend/app.db:/app/app.db:rw"
       - "./backend/app:/app/app:ro"
+  static:
+    image: nginx
+    volumes:
+      - "./static/:/usr/share/nginx/html:ro"
+    ports:
+      - "8080:80"
 

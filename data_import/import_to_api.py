@@ -1,5 +1,6 @@
 import json
 import requests
+from uuid import uuid4
 
 
 with open("./data.json", "r") as f:
@@ -14,8 +15,15 @@ for recipe in recipes:
 
 for ingredient in ingredients.values():
     if ingredient["image"] is not None:
+        imgstream = requests.get(ingredient["image"], stream=True)
+        filename = uuid4()
+        if imgstream.status_code == 200:
+            with open(f"./../static/{filename}.jpg", "wb") as f:
+                for chunk in imgstream.iter_content(chunk_size=1024):
+                    if chunk:
+                        f.write(chunk)
         rimg = requests.post(
-            "http://localhost:8000/pictures/from-path", json={"path": ingredient["image"]}
+            "http://localhost:8000/pictures/from-path", json={"path": f"http://localhost:8080/static/{filename}.jpg"}
         )
         print(rimg, rimg.content)
         rimgjson = rimg.json()
@@ -39,8 +47,15 @@ for ingredient in ingredients.values():
 for recipe in recipes:
     rimgjson = {}
     if recipe["image"] is not None:
+        imgstream = requests.get(recipe["image"], stream=True)
+        filename = uuid4()
+        if imgstream.status_code == 200:
+            with open(f"./../static/{filename}.jpg", "wb") as f:
+                for chunk in imgstream.iter_content(chunk_size=1024):
+                    if chunk:
+                        f.write(chunk)
         rimg = requests.post(
-            "http://localhost:8000/pictures/from-path", json={"path": recipe["image"]}
+            "http://localhost:8000/pictures/from-path", json={"path": f"http://localhost:8080/static/{filename}.jpg"}
         )
         print(rimg, rimg.content)
         rimgjson = rimg.json()
