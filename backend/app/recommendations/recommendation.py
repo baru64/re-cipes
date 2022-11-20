@@ -4,26 +4,7 @@ from surprise import Dataset
 from surprise import Reader
 from surprise import KNNWithMeans
 
-# column_names = ['user_id', 'item_id', 'rating', 'timestamp']
-# df = pd.read_csv('data/u.data', sep='\t', names=column_names)
-# # print(df.head())
-# # print(f"Shape df:{df.shape[0]}")
-
-# # print(np.unique(df['user_id'].to_numpy()))
-
-# df2 = df.loc[df['user_id']<10]
-# # print(f"Shape df2:{df2.shape[0]}")
-
-# df3 = df2.loc[df2['item_id']<100]
-# # print(f"Shape df3:{df3.shape[0]}")
-# # print(df3)
-# df3.to_csv(index=None, sep='\t', path_or_buf='data/ratings10users100items.csv')
-
-column_names = ['user_id', 'item_id', 'rating', 'timestamp']
-
-#functions
-
-# statistics
+import requests
 
 def get_recommender_model(df: pd.DataFrame) -> KNNWithMeans:
     
@@ -83,21 +64,21 @@ def get_eco_recommendation(my_cart: list, recipes):
     result = [x for x in recipes_points if x[1] > 0]
     df = pd.DataFrame(result, columns = ['recipe_name', 'points'])
     return df.sort_values('points', ascending=False)
-    
+
+def get_data(response):
+    x = response[0]
+    for y in x['ingredients']:
+        print(y)
+
 if __name__ == '__main__':
-    # df = pd.read_csv('data/ratings10users100items.csv', sep='\t')
-
-    # model = get_recommender_model(df)
-
-
-    # df_with_recomms = get_n_best_rated_items_for_user(df, 5, 1, model)
-    # print(df_with_recomms)
     
-    # df2 = df_with_recomms.loc[df_with_recomms['item_id']!=0]
-    # df3 = df2.loc[df2['item_id']<181].sort_values('item_id')
-    # print(df3)
-    
-    # df3.to_csv(index=None, sep='\t', path_or_buf='data/ratingswithrecomms_userid1.csv')
-    
-    df = pd.read_csv('data/ratingswithrecomms_userid1.csv', sep='\t')
-    print(df)
+    response = requests.get("http://127.0.0.1:8000/recipes/")
+    if(response.status_code == 200):
+        print("The request was a success!")
+        # Code here will only run if the request is successful
+        get_data(response.json())
+    elif(response.status_code == 404):
+        print("Result not found!")
+        # df = pd.read_csv('data/ratingswithrecomms_userid1.csv', sep='\t')
+        # print(df)
+        
