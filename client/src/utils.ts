@@ -5,10 +5,10 @@ const API_URL = 'http://127.0.0.1:8000';
 export const callAPI = async (url: String, method?: string, body?: string, headers?: any) => {
     const response = await fetch(
         `${API_URL}${url}`,
-        (method && body && headers) ? {
+        (method && body) ? {
             method,
             body,
-            headers,
+            headers: {"content-type": "application/json"}
         } : {},
     );
     console.log(response);
@@ -22,11 +22,9 @@ export const callAPI = async (url: String, method?: string, body?: string, heade
 
 export const searchRecipes = async (items: SearchPayload[]) => {
     const result = await (callAPI(
-            '/recipes/_search',
+            '/recipes/_search?limit=9',
             "POST",
-            JSON.stringify({ingredients: items}),
-            {"content-type": 'application/json'}
-            )
+            JSON.stringify({ingredients: items}))
     );
     return result;
 }

@@ -81,7 +81,7 @@ def get_search(cart):
     """
     products_to_use = [x["ingredient_id"] for x in cart["ingredients"]]
     # recipe contents
-    recipe_content_response = requests.get("http://127.0.0.1:8000/recipes/")
+    recipe_content_response = requests.get("http://127.0.0.1:80/recipes/")
     if recipe_content_response.status_code == 200:
         print("The request was a success!")
         # Code here will only run if the request is successful
@@ -92,7 +92,7 @@ def get_search(cart):
         print("Result not found!")
 
     # print(recipe_points_df.shape[0])
-    ratings_recipes_response = requests.get("http://localhost:8000/ratings/")
+    ratings_recipes_response = requests.get("http://localhost:80/ratings/")
     if ratings_recipes_response.status_code == 200:
         print("The request was a success!")
         # Code here will only run if the request is successful
