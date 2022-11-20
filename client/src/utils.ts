@@ -39,3 +39,14 @@ export const fetchSingleRecipe = async (id: Number) => {
         return data;
     }
 }
+
+export const fetchSingleIngredient = async (id: Number) => {
+    const response = await fetch(`${API_URL}/ingredients/${id}`)
+    const data = await response.json();
+
+    console.log(data);
+
+    if (response.ok) {
+        return data;
+    }
+}
