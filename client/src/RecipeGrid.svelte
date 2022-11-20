@@ -119,13 +119,13 @@
     {#await fetchRecipes()}
         <p> LOADING</p>
     {:then recipes}
-        {#each recipes.slice(0, 9) as recipe}
+        {#each recipes.splice(0,9) as recipe}
             <Cell span={4} style="margin:-0.25rem">
                 <div class="card-container">
                     <Link to="recipe/{recipe.id}">
                         <Card>
                             <PrimaryAction on:click={()=>{}}>
-                                <Media style="background-image: url({recipe.image});"
+                                <Media style="background-image: url({recipe.ingredients[0].image});"
                                        class="card-media-16x9"
                                        aspectRatio="16x9">
                                     <div style="place-items: center start">

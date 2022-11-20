@@ -3,33 +3,58 @@
     import Autocomplete from '@smui-extra/autocomplete'
     import LayoutGrid, {Cell} from '@smui/layout-grid';
     import Button from '@smui/button';
-    import List, {Item, Meta, Text, Graphic} from '@smui/list';
+    import List, {Graphic, Item, Meta, Text} from '@smui/list';
+    import {items} from "../store";
 
     import {getAllIngredients} from "./utils";
     import type {Ingredient} from "./data";
 
     let selectedIngredient: Ingredient = null;
     let selectedAmount: Number = null;
-    let items: Ingredient[] = [];
+    let itemsLen: Number = null;
+    let currentItems: Ingredient[]
+    let result = null
+
+    items.subscribe(items => {
+        itemsLen = items.length
+        currentItems = items
+        doPost()
+    })
 
     const allIngredients = getAllIngredients();
 
     const handleAddItem = () => {
-        if (!!items.find((item) => item.name === selectedIngredient.name)) {
-            items = items.map(item => item.name === selectedIngredient.name ? {
-                ...item,
-                amount: item.amount + selectedAmount,
-            } : item)
-        } else {
-            items = [...items, {...selectedIngredient, amount: selectedAmount}]
-        }
+        items.update(items => {
+            if (!!items.find((item) => item.name === selectedIngredient.name)) {
+                items = items.map(item => item.name === selectedIngredient.name ? {
+                    ...item,
+                    amount: item.amount + selectedAmount,
+                } : item)
+            } else {
+                items = [...items, {...selectedIngredient, amount: selectedAmount}]
+            }
+            return items
+        })
 
         selectedIngredient = null;
         selectedAmount = null;
     }
 
+    async function doPost() {
+        if (currentItems.length !== 0) {
+            await fetch("127.0.0.1:8000/fridge",
+                {
+                    method: "POST",
+                    body: JSON.stringify(
+                        currentItems
+                    )
+                })
+            console.log("POST",JSON.stringify(currentItems))
+        }
+    }
+
     const handleRemoveItem = (item: Ingredient) => {
-        items = items.filter(el => el.name !== item.name)
+        items.update(items => items.filter(el => el.name !== item.name))
     }
 </script>
 
@@ -55,9 +80,9 @@
         </Button>
     </Cell>
 </LayoutGrid>
-{#if items.length}
+{#if itemsLen}
     <List avatarList>
-        {#each items as item}
+        {#each $items as item}
             <Item>
                 <Graphic
                         style="background-image: url({item.image})"
