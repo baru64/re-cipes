@@ -33,6 +33,7 @@ class RecipeResponse(BaseModel):
     name: str
     description: Optional[str] = None
     picture_id: Optional[int]
+    picture: Optional[str]
     eco_score: Optional[int]
     ingredients: List[Any]
 
@@ -60,6 +61,7 @@ class RecipeExtended(BaseModel):
 
 class RecipeCreate(RecipeBase):
     pass
+
 
 class Recipe(RecipeBase):
     id: int
@@ -133,6 +135,7 @@ class Picture(PictureBase):
 
     class Config:
         orm_mode = True
+
 
 class PictureUpload(BaseModel):
     img: bytes
