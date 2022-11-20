@@ -16,6 +16,7 @@ export interface Recipe {
     image: String;
     ingredients: Ingredient[];
     steps: String[];
+    description?: String[];
 }
 
 export enum UNITS {

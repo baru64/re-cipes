@@ -1,6 +1,8 @@
 import type {Ingredient, Recipe} from "./data";
 import {UNITS} from "./data";
 
+const API_URL = 'http://127.0.0.1:8000';
+
 export const getAllIngredients = (): Ingredient[] => [
     {
         id: 1,
@@ -20,12 +22,31 @@ export const getAllIngredients = (): Ingredient[] => [
     },
 ];
 
-export async function fetchRecipes(): Promise<Recipe[]>{
-    const resp = await fetch("http://127.0.0.1:8000/recipes/");
+export async function fetchRecipes(): Promise<Recipe[]> {
+    const resp = await fetch(`${API_URL}/recipes-pretty/`);
     const data = await resp.json();
 
-    if (resp.ok){
+    if (resp.ok) {
         return data
     }
+}
 
+export const fetchSingleRecipe = async (id: Number) => {
+    const response = await fetch(`${API_URL}/recipes/${id}`)
+    const data = await response.json();
+
+    if (response.ok) {
+        return data;
+    }
+}
+
+export const fetchSingleIngredient = async (id: Number) => {
+    const response = await fetch(`${API_URL}/ingredients/${id}`)
+    const data = await response.json();
+
+    console.log(data);
+
+    if (response.ok) {
+        return data;
+    }
 }

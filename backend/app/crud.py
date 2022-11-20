@@ -5,11 +5,10 @@ from . import models, schemas
 
 def get_recipes(db: Session):
     recipes_db = db.query(models.Recipe).all()
-    print(recipes_db)
     recipes = [schemas.RecipeResponse.from_orm(r) for r in recipes_db]
     for recipe in recipes:
         if recipe.picture_id is not None:
-            pic_db = db.query(models.Picture).filter(models.Picture.id == recipe.picture_id)
+            pic_db = db.query(models.Picture).filter(models.Picture.id == recipe.picture_id).first()
             if pic_db is not None:
                 pic = schemas.Picture.from_orm(pic_db)
                 recipe.picture = pic.path
@@ -29,7 +28,6 @@ def create_recipe(db: Session, recipe: schemas.RecipeCreate):
     db.refresh(new_recipe)
     nr_obj = schemas.Recipe.from_orm(new_recipe)
     for ia in ingredients:
-        print(ia)
         create_ia = schemas.CreateIngredientAmount(
             **ia,
             recipe_id=nr_obj.id
@@ -45,7 +43,7 @@ def get_products(db: Session):
     products = [schemas.Product.from_orm(r) for r in products_db]
     for product in products:
         if product.picture_id is not None:
-            pic_db = db.query(models.Picture).filter(models.Picture.id == product.picture_id)
+            pic_db = db.query(models.Picture).filter(models.Picture.id == product.picture_id).first()
             if pic_db is not None:
                 pic = schemas.Picture.from_orm(pic_db)
                 product.picture = pic.path
@@ -69,7 +67,7 @@ def get_ingredients(db: Session):
     ingredients = [schemas.Ingredient.from_orm(r) for r in ingredient_db]
     for ingredient in ingredients:
         if ingredient.picture_id is not None:
-            pic_db = db.query(models.Picture).filter(models.Picture.id == ingredient.picture_id)
+            pic_db = db.query(models.Picture).filter(models.Picture.id == ingredient.picture_id).first()
             if pic_db is not None:
                 pic = schemas.Picture.from_orm(pic_db)
                 ingredient.picture = pic.path
@@ -89,7 +87,7 @@ def create_ingredient(db: Session, ingredient: schemas.IngredientCreate):
 
 
 def create_picture(db: Session, picture: schemas.PictureCreate):
-    new_picture = models.Product(**picture.dict())
+    new_picture = models.Picture(**picture.dict())
     db.add(new_picture)
     db.commit()
     db.refresh(new_picture)

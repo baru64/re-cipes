@@ -4,6 +4,7 @@ from surprise import Dataset
 from surprise import Reader
 from surprise import KNNWithMeans
 
+import requests
 
 def get_recommender_model(df: pd.DataFrame) -> KNNWithMeans:
     """
@@ -49,7 +50,7 @@ def get_n_best_rated_items_for_user(df: pd.DataFrame, user_id: int, model: KNNWi
             
     return df_specific_user_id
 
-def get_eco_recommendation(my_cart: list, recipes):
+def get_recipe_content_count(my_cart: list, recipes) -> pd.DataFrame:
     """
     Gets my_cart e.g. ['chicken', 'dried oregano']
     and returns Datframe with column recipe_name and points
@@ -59,27 +60,37 @@ def get_eco_recommendation(my_cart: list, recipes):
     for x in recipes:
         points = 0
         for y in x['ingredients']:
-            if(y['name'] in my_cart):
+            if(y['ingredient_id'] in my_cart):
                 points += 1
-        recipes_points.append([x['name'], points])
+        recipes_points.append([x['id'], points])
     result = [x for x in recipes_points if x[1] > 0]
-    df = pd.DataFrame(result, columns = ['recipe_name', 'points'])
+    df = pd.DataFrame(result, columns = ['recipe_id', 'points'])
     return df.sort_values('points', ascending=False)
-    
+
+def get_ratings_for_dataframe(df: pd.DataFrame):
+    pass
+
 if __name__ == '__main__':
-    # df = pd.read_csv('data/ratings10users100items.csv', sep='\t')
-
-    # model = get_recommender_model(df)
-
-
-    # df_with_recomms = get_n_best_rated_items_for_user(df, 5, 1, model)
-    # print(df_with_recomms)
     
-    # df2 = df_with_recomms.loc[df_with_recomms['item_id']!=0]
-    # df3 = df2.loc[df2['item_id']<181].sort_values('item_id')
-    # print(df3)
+    my_cart = [1, 2]
     
-    # df3.to_csv(index=None, sep='\t', path_or_buf='data/ratingswithrecomms_userid1.csv')
+    # recipe contents
+    recipe_content_response = requests.get("http://127.0.0.1:8000/recipes/")
+    if(recipe_content_response.status_code == 200):
+        print("The request was a success!")
+        # Code here will only run if the request is successful
+        recipe_points_df = get_recipe_content_count(my_cart, recipe_content_response.json())
+    elif(recipe_content_response.status_code == 404):
+        print("Result not found!")
     
-    df = pd.read_csv('data/ratingswithrecomms_userid1.csv', sep='\t')
-    print(df)
+    # recipe ratings 
+    recipe_content_response = requests.get("http://localhost:8000/ratings/")
+    if(recipe_content_response.status_code == 200):
+        print("The request was a success!")
+        # Code here will only run if the request is successful
+        ratings_recipes_df = get_recipe_content_count(my_cart, recipe_content_response.json())
+    elif(recipe_content_response.status_code == 404):
+        print("Result not found!")
+
+    
+        

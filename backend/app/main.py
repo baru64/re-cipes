@@ -26,6 +26,7 @@ logger = logging.getLogger(__name__)
 origins = [
     "http://localhost",
     "http://localhost:8080",
+    'http://localhost:8000',
     "*"
 ]
 
@@ -65,9 +66,14 @@ def read_recipes_pretty(db: Session = Depends(get_db)):
         ingredients = []
         for i in r.ingredients:
             ingr = schemas.Ingredient.from_orm(crud.get_ingredient(db, i.ingredient_id))
+            ipic = None
+            if ingr.picture_id is not None:
+                ipics = crud.get_picture(db, ingr.picture_id)
+                ipicso = schemas.Picture.from_orm(ipics)
+                ipic = ipicso.path
             ingredients.append(schemas.IngredientInfo(
                 id=ingr.id,
-                image=ingr.picture,
+                image=ipic,
                 name=ingr.name,
                 amount=i.amount,
                 unit=ingr.amount_unit
@@ -139,10 +145,9 @@ def create_ingredient(create_request: schemas.IngredientCreate, db: Session = De
 # pictures
 
 @app.post("/pictures/", response_model=schemas.Picture, tags=["pictures"])
-def create_picture(
+def upload_picture(
     create_request: schemas.PictureUpload, db: Session = Depends(get_db)
 ):
-    logger.debug("create_report")
     name = uuid.uuid4()
     image_path = f"{name}.JPG"
     image_bytes = base64.b64decode(create_request.img)
@@ -153,6 +158,12 @@ def create_picture(
     )
     return crud.create_picture(db, picture_create)
 
+
+@app.post("/pictures/from-path", response_model=schemas.Picture, tags=["pictures"])
+def create_picture(
+    create_request: schemas.PictureCreate, db: Session = Depends(get_db)
+):
+    return crud.create_picture(db, create_request)
 
 # ratings
 
