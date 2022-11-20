@@ -68,3 +68,4 @@ class Rating(Base):
     user_id = Column(String, index=True)
     recipe_id = Column(Integer, index=True)
     rating = Column(Float, index=True)
+

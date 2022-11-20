@@ -39,4 +39,4 @@ for recipe in recipes:
       "ingredients": recipe_ingredients
     }
     r = requests.post("http://localhost:8000/recipes/", json=data)
-    print(r, r.content, r.request.body)
+    print(r, r.content)

@@ -153,7 +153,6 @@ def create_picture(
     )
     return crud.create_picture(db, picture_create)
 
-
 # ratings
 
 @app.get("/ratings/", response_model=List[schemas.Rating], tags=["ratings"])
