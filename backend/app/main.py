@@ -1,5 +1,5 @@
 import logging
-from typing import List
+from typing import List, Dict
 from hashlib import sha512
 import base64
 import uuid
@@ -191,9 +191,9 @@ def delete_all_ratings(db: Session = Depends(get_db)):
 
 # controllers
 
-@app.post("/recipes/_search", response_model=schemas.RecipeSearchResponse, tags=["recipes"])
-def search_recipes(request: schemas.RecipeSearchRequest, db: Session = Depends(get_db)):
-    return NotImplementedError
+@app.post("/recipes/_search", response_model=Dict[int, schemas.RecipeResponse], tags=["recipes"])
+def search_recipes(request: schemas.RecipeSearchRequest, limit: int = 9, db: Session = Depends(get_db)):
+    return crud.get_recipe_search(db, cart=request, n=limit)
 
 
 @app.post("/products/_search", response_model=schemas.ProductSearchResponse, tags=["products"])

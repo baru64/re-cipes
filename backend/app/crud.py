@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 
 from . import models, schemas
+from .recommendations import recommendation
 
 
 def get_recipes(db: Session):
@@ -121,9 +122,27 @@ def create_rating(db: Session, rating: schemas.RatingCreate):
     db.refresh(new_rating)
     return new_rating
 
+
 def delete_all_ratings(db: Session):
     try:
         db.query(models.Rating).delete()
         db.commit()
     except:
         db.rollback()
+
+
+def get_recipe_search(db: Session, cart: schemas.RecipeSearchRequest, n: int = 9):
+    print("cart: ", cart.dict())
+    search_result = recommendation.get_search(cart.dict())
+    if search_result is not None:
+        top_recipes = recommendation.get_n_best_recipes_dict(search_result, n)
+    else:
+        top_recipes = []
+    print(top_recipes)
+    recipes = {}
+    idx = 1
+    for r in top_recipes:
+        recipe = get_recipe(db, r["recipe_id"])
+        recipes[idx] = recipe
+        idx += 1
+    return recipes
