@@ -8,10 +8,18 @@ with open("./data.json", "r") as f:
 
 ingredients = {}
 
+
+def namefix(s: str) -> str:
+    return s.lower().replace("-", " ")
+
+
 for recipe in recipes:
     for ingredient in recipe["ingredients"]:
+        ingredient["name"] = namefix(ingredient["name"])
         if not ingredient["name"] in ingredients:
             ingredients[ingredient["name"]] = ingredient
+
+print(len(ingredients))
 
 for ingredient in ingredients.values():
     if ingredient["image"] is not None:
